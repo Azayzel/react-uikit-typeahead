@@ -5,6 +5,7 @@ node_modules
 # locks
 package-lock.json
 demo/package-lock.json
+demo/yarn.lock
 # testing
 coverage
 
