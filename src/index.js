@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import * as UIKit from 'uikit'
 import 'uikit/dist/css/uikit.min.css';
-import './index.css'
+import './module.css'
 
 export class TypeAhead extends Component {
 
@@ -24,8 +23,7 @@ export class TypeAhead extends Component {
 
     onChange = e => {
         const { suggestions } = this.props;
-        console.log(this.props)
-        const userInput = e.currentTarget.value;
+        const userInput = e.target.value;
 
         const filteredSuggestions = suggestions.filter(
             suggestion =>
@@ -36,9 +34,8 @@ export class TypeAhead extends Component {
             activeSuggestion: 0,
             filteredSuggestions,
             showSuggestions: true,
-            userInput: e.currentTarget.value
+            userInput: e.target.value
         });
-        this.props.handleTypeAheadChange(e.currentTarget.value)
     };
 
     onClick = e => {
@@ -59,6 +56,7 @@ export class TypeAhead extends Component {
                 showSuggestions: false,
                 userInput: filteredSuggestions[activeSuggestion]
             });
+            this.props.handleTypeAheadChange(filteredSuggestions[activeSuggestion])
         } else if (e.keyCode === 38) {
             if (activeSuggestion === 0) {
                 return;
@@ -90,14 +88,7 @@ export class TypeAhead extends Component {
         if (showSuggestions && userInput) {
             if (filteredSuggestions.length) {
                 suggestionsListComponent = (
-                    <ul className="uk-nav uk-dropdown-nav uk-background-muted uk-padding" style={{ maxHeight: "500px", overflowX: "hidden", overflowY: "auto", maxWidth: "350px" }} collapsible="true">
-                        <li className="option-item uk-margin-small">
-                            <div className="uk-align-center uk-margin-small uk-text-bold">
-                                <input type="checkbox" className="uk-checkbox uk-margin-small-right" onChange={() => this.handleItemClick("All")} />
-                                <span>Select All</span>
-                            </div>
-
-                        </li>
+                    <ul className="uk-nav uk-dropdown-nav" style={{ maxHeight: "500px", overflowX: "hidden", overflowY: "auto", maxWidth: "350px" }}>
                         {filteredSuggestions.map((suggestion, index) => {
                             let className;
 
@@ -107,11 +98,8 @@ export class TypeAhead extends Component {
 
                             return (
                                 <li key={suggestion} className="option-item uk-margin-small">
-                                    <div className="uk-align-center uk-margin-small">
-                                        <input name={suggestion} type="checkbox" className="uk-checkbox uk-margin-small-right" onChange={() => onClick(suggestion)} />
-                                        <span>
-                                            {suggestion}
-                                        </span>
+                                    <div className="uk-margin-small" onClick={() => onClick(suggestion)}>
+                                        <span>{suggestion}</span>
                                     </div>
                                 </li>
                             );

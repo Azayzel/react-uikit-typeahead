@@ -1,6 +1,6 @@
 {
     "name": "react-uikit-typeahead",
-    "version": "1.0.1",
+    "version": "1.0.10",
     "description": "A React typeahead Component built with UIKit 3",
     "main": "build/index.js",
     "peerDependencies": {
@@ -42,6 +42,7 @@
         "@babel/plugin-transform-react-jsx": "7.3.0",
         "@babel/preset-env": "7.5.5",
         "babel-loader": "^8.0.6",
-        "css-loader": "^3.2.0"
+        "css-loader": "^3.2.0",
+        "style-loader": "^1.0.0"
     }
 }
