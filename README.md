@@ -1,7 +1,7 @@
 # React-UIKit-Typeahead
 
 A Typeahead component built for React with [UIKit3](https://https://getuikit.com/)
-[Check out the Demo](https://https://getuikit.com/)
+![](typeAhead.gif)
 
 ## Installing
 
