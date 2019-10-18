@@ -1,7 +1,7 @@
 {
-    "name": "react-uikit-multiselect",
-    "version": "1.0.0",
-    "description": "A React Multiselect Component built with UIKit 3",
+    "name": "react-uikit-typeahead",
+    "version": "1.0.1",
+    "description": "A React typeahead Component built with UIKit 3",
     "main": "build/index.js",
     "peerDependencies": {
         "react": "^16.10.2"
@@ -16,24 +16,22 @@
         "start": "webpack --watch",
         "build": "webpack"
     },
-    "author": {
-        "name": "Josh Lavely",
-        "email": "Josh.Lavely@gmail.com"
-    },
+    "author": "Josh Lavely <Josh.Lavely@gmail.com>",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Azayzel/react-uikit-multiselect.git"
+        "url": "git+https://github.com/Azayzel/react-uikit-typeahead.git"
     },
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/Azayzel/react-uikit-multiselect/issues"
+        "url": "https://github.com/Azayzel/react-uikit-typeahead/issues"
     },
-    "homepage": "https://github.com/Azayzel/react-uikit-multiselect/my_package",
+    "homepage": "https://github.com/Azayzel/react-uikit-typeahead/my_package",
     "keywords": [
         "React",
         "UIKit3",
         "UIKit",
-        "MultiSelect"
+        "Typeahead",
+        "Autocomplete"
     ],
     "devDependencies": {
         "@babel/cli": "^7.6.4",

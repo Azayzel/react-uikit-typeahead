@@ -1,30 +1,30 @@
-# React-UIKit-MultiSelect
+# React-UIKit-Typeahead
 
-A MultiSelect component built for React with [UIKit3](https://https://getuikit.com/)
+A Typeahead component built for React with [UIKit3](https://https://getuikit.com/)
 [Check out the Demo](https://https://getuikit.com/)
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Installing
+## Installing
 
 Install the package with npm or Yarn
 
 ```React
-npm i react-uikit-multiselect --save
+npm i react-uikit-typeahead --save
 or
-yarn add react-uikit-multiselect
+yarn add react-uikit-typeahead
 
 ```
 
 Next, Import the Module and supply props
 
 ```React
-import MultiSelect from "react-uikit-multiselect";
+import MultiSelect from "react-uikit-typeahead";
 ...
 
-<MultiSelect OptionsList={this.state.identifiers} onOptionChecked={this.onOptionChecked} />
+<div class="uk-form-controls">
+    <TypeAhead
+        suggestions={this.state.typeAheadSuggestions}
+        handleTypeAheadChange={this.handleTypeAheadChange} />
+</div>
 ```
 
 ## Built With

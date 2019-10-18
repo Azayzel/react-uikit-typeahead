@@ -1,81 +1,147 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import * as UIKit from 'uikit'
 import 'uikit/dist/css/uikit.min.css';
 import './index.css'
 
-class MultiSelect extends Component {
+export class TypeAhead extends Component {
 
+    static propTypes = {
+        suggestions: PropTypes.instanceOf(Array)
+    };
+    static defaultProperty = {
+        suggestions: []
+    };
     constructor(props) {
-        super(props)
-        this.state = this.getInitialState();
-        this.OptionItem = this.OptionItem.bind(this)
+        super(props);
+        this.state = {
+            activeSuggestion: 0,
+            filteredSuggestions: [],
+            showSuggestions: props.showSuggestions,
+            userInput: ""
+        };
     }
 
-    OptionItem({ opt }) {
-        return (
-            <li className="option-item uk-margin-small">
-                <div className="uk-margin-small" onClick={() => {
-                    opt.checked = opt.checked ? false : true;
-                    this.handleItemClick(opt);
-                }}>
-                    <input name={opt.value} type="checkbox" checked={opt.checked} className="uk-checkbox uk-margin-small-right" />
-                    <span>
-                        {opt.value}
-                    </span>
-                </div>
-            </li>
-        )
-    }
+    onChange = e => {
+        const { suggestions } = this.props;
+        console.log(this.props)
+        const userInput = e.currentTarget.value;
 
-    getInitialState() {
-        let newOptions = [];
-        this.props.OptionsList.forEach(opt => {
-            newOptions.push({ checked: false, value: opt })
+        const filteredSuggestions = suggestions.filter(
+            suggestion =>
+                suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+        );
+
+        this.setState({
+            activeSuggestion: 0,
+            filteredSuggestions,
+            showSuggestions: true,
+            userInput: e.currentTarget.value
         });
+        this.props.handleTypeAheadChange(e.currentTarget.value)
+    };
 
-        return {
-            allChecked: false,
-            optionsList: newOptions,
-            selectedItems: []
+    onClick = e => {
+        this.setState({
+            activeSuggestion: 0,
+            filteredSuggestions: [],
+            showSuggestions: false,
+            userInput: e
+        });
+        this.props.handleTypeAheadChange(e)
+    };
+    onKeyDown = e => {
+        const { activeSuggestion, filteredSuggestions } = this.state;
+
+        if (e.keyCode === 13) {
+            this.setState({
+                activeSuggestion: 0,
+                showSuggestions: false,
+                userInput: filteredSuggestions[activeSuggestion]
+            });
+        } else if (e.keyCode === 38) {
+            if (activeSuggestion === 0) {
+                return;
+            }
+
+            this.setState({ activeSuggestion: activeSuggestion - 1 });
+        } else if (e.keyCode === 40) {
+            if (activeSuggestion - 1 === filteredSuggestions.length) {
+                return;
+            }
+
+            this.setState({ activeSuggestion: activeSuggestion + 1 });
         }
-    }
-
-    handleItemClick(opt) {
-        let arr = this.state.selectedItems;
-        if (opt.checked) {
-            arr.push(opt.value);
-        }
-        else {
-
-            arr.splice(arr.indexOf(opt), 1)
-        }
-
-        this.setState({ selectedItems: arr })
-
-        this.props.onOptionChecked(arr)
-    }
+    };
 
     render() {
-        return (
-            <div className="uk-button-group uk-width-1-1" style={{ maxHeight: "500px", maxWidth: "350px" }}>
-                <div className="uk-inline uk-width-1-1">
-                    <button className="uk-button uk-button-default uk-select uk-background-muted" type="button" />
-                    <div uk-dropdown="mode: click; boundary: ! .uk-button-group; boundary-align: true;" className="uk-background-muted">
-                        <ul className="uk-nav uk-dropdown-nav" style={{ maxHeight: "500px", overflowX: "hidden", overflowY: "auto", maxWidth: "350px" }}>
+        const {
+            onChange,
+            onClick,
+            onKeyDown,
+            state: {
+                activeSuggestion,
+                filteredSuggestions,
+                showSuggestions,
+                userInput
+            }
+        } = this;
+        let suggestionsListComponent;
+        if (showSuggestions && userInput) {
+            if (filteredSuggestions.length) {
+                suggestionsListComponent = (
+                    <ul className="uk-nav uk-dropdown-nav uk-background-muted uk-padding" style={{ maxHeight: "500px", overflowX: "hidden", overflowY: "auto", maxWidth: "350px" }} collapsible="true">
+                        <li className="option-item uk-margin-small">
+                            <div className="uk-align-center uk-margin-small uk-text-bold">
+                                <input type="checkbox" className="uk-checkbox uk-margin-small-right" onChange={() => this.handleItemClick("All")} />
+                                <span>Select All</span>
+                            </div>
 
-                            {
-                                this.state.optionsList.map((opt, i) => {
-                                    return (
-                                        <this.OptionItem key={i} opt={opt} />
-                                    )
-                                })
+                        </li>
+                        {filteredSuggestions.map((suggestion, index) => {
+                            let className;
+
+                            if (index === activeSuggestion) {
+                                className = "uk-active";
                             }
-                        </ul>
+
+                            return (
+                                <li key={suggestion} className="option-item uk-margin-small">
+                                    <div className="uk-align-center uk-margin-small">
+                                        <input name={suggestion} type="checkbox" className="uk-checkbox uk-margin-small-right" onChange={() => onClick(suggestion)} />
+                                        <span>
+                                            {suggestion}
+                                        </span>
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                );
+            } else {
+                suggestionsListComponent = (
+                    <div className="uk-card uk-card-default uk-card-body uk-position-absolute uk-width-1-3">
+                        <div uk-alert="true">
+                            <em className="uk-alert-danger">No suggestions</em>
+                        </div>
                     </div>
-                </div>
-            </div>
-        )
+                );
+            }
+        }
+
+        return (
+            <React.Fragment>
+                <input
+                    type="search"
+                    className="uk-input uk-select"
+                    onChange={onChange}
+                    onKeyDown={onKeyDown}
+                    value={userInput}
+                />
+                {suggestionsListComponent}
+            </React.Fragment>
+        );
     }
 }
 
-export default MultiSelect
+export default TypeAhead;
