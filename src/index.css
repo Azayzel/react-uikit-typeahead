@@ -1,0 +1,8 @@
+.option-item {
+	padding: 5px;
+}
+.option-item:hover{
+	background-color: #1e87f0;
+	opacity: 0.5;
+	color: white;
+}

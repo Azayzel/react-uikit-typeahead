@@ -1,0 +1,49 @@
+{
+    "name": "react-uikit-multiselect",
+    "version": "1.0.0",
+    "description": "A React Multiselect Component built with UIKit 3",
+    "main": "build/index.js",
+    "peerDependencies": {
+        "react": "^16.10.2"
+    },
+    "dependencies": {
+        "react": "^16.10.2",
+        "webpack": "^2.6.1",
+        "uikit": "^3.2.0"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "webpack --watch",
+        "build": "webpack"
+    },
+    "author": {
+        "name": "Josh Lavely",
+        "email": "Josh.Lavely@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Azayzel/react-uikit-multiselect.git"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Azayzel/react-uikit-multiselect/issues"
+    },
+    "homepage": "https://github.com/Azayzel/react-uikit-multiselect/my_package",
+    "keywords": [
+        "React",
+        "UIKit3",
+        "UIKit",
+        "MultiSelect"
+    ],
+    "devDependencies": {
+        "@babel/cli": "^7.6.4",
+        "@babel/core": "^7.6.4",
+        "@babel/plugin-proposal-object-rest-spread": "7.5.5",
+        "@babel/plugin-transform-arrow-functions": "7.2.0",
+        "@babel/plugin-proposal-class-properties": "7.5.5",
+        "@babel/plugin-transform-react-jsx": "7.3.0",
+        "@babel/preset-env": "7.5.5",
+        "babel-loader": "^8.0.6",
+        "css-loader": "^3.2.0"
+    }
+}
